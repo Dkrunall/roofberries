@@ -42,3 +42,4 @@ next-env.d.ts
 
 .vercel
 .env*
+scripts/roofberries_pub.json
