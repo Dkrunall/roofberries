@@ -21,6 +21,8 @@ cp .env.local.example .env.local
 
 ## 2. Run the database migrations
 
+**Quickest:** paste the whole of `supabase/roofberries_full_setup.sql` into the SQL Editor and click Run once — it is migrations 0001–0013 combined in one transaction. Or run the individual files below in order:
+
 Open your Supabase project's **SQL Editor** and run these files **in order** (each is meant to run once against a fresh project):
 
 1. `supabase/migrations/0001_schema.sql` — tables, enums, indexes
