@@ -1,0 +1,17 @@
+-- OPA Bar & Cafe — QR table ordering
+-- 0009_cart_items_replica_identity.sql
+--
+-- Fixes a real bug found in live two-tab testing: DELETE events on
+-- cart_items were silently never reaching other devices at the table (e.g.
+-- the cart failing to visibly clear on other phones once someone placed
+-- the order), even though INSERT/UPDATE synced fine.
+--
+-- Root cause: Postgres's default REPLICA IDENTITY only includes primary
+-- key columns in a DELETE's "old row" WAL image. Supabase Realtime's
+-- server-side subscription filter here is `table_id=eq.<uuid>` — a
+-- non-primary-key column — so with the default identity, `table_id` isn't
+-- present in the deleted row's image and the filter can never match,
+-- silently dropping the event before it reaches any subscriber. Setting
+-- REPLICA IDENTITY FULL includes every column in that image, so
+-- table_id-filtered DELETE events are delivered correctly.
+alter table public.cart_items replica identity full;
