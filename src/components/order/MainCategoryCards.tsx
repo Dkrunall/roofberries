@@ -27,6 +27,12 @@ const SECTION_ICON: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
  *  prefers a category's own representative photo over an individual
  *  dish/drink's, since most items don't have one but many categories do. */
 function representativeImage(section: MenuSection): string | null {
+  const categoryArtwork: Record<string, string> = {
+    Beverages: '/categories/beverages.png',
+    Barista: '/categories/barista.png',
+    'Jain Menu': '/categories/jain-menu.png',
+  };
+  if (categoryArtwork[section.section]) return categoryArtwork[section.section];
   for (const cat of section.categories) {
     if (isValidImageSrc(cat.imageUrl)) return cat.imageUrl;
   }
@@ -56,7 +62,10 @@ export function MainCategoryCards({
   onSelect: (section: string) => void;
 }) {
   return (
-    <div className="flex gap-3 sm:gap-3.5 overflow-x-auto no-scrollbar pb-2 pl-4 pr-4 -mx-4 snap-x snap-mandatory">
+    // Horizontal swipe row: fixed-width cards with scroll snapping, bled to
+    // the screen edges (-mx-4/px-4 cancels simpleMain's 16px padding) so the
+    // next card peeks in and signals there's more to swipe.
+    <div className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-3 no-scrollbar">
       {sections.map((section) => {
         const image = representativeImage(section);
         const itemCount = totalItemCount(section);
@@ -66,14 +75,14 @@ export function MainCategoryCards({
             key={section.section}
             type="button"
             onClick={() => onSelect(section.section)}
-            className="group relative h-56 sm:h-60 w-36 sm:w-40 shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 bg-[#121215] shadow-xl transition-all duration-300 hover:border-amber-400/50 hover:shadow-amber-500/20 active:scale-[0.97] cursor-pointer"
+            className="group relative h-52 w-40 shrink-0 snap-start overflow-hidden rounded-2xl bg-[#352c29] shadow-md transition-transform duration-200 hover:-translate-y-1 active:scale-[0.97] cursor-pointer sm:h-60 sm:w-48"
           >
             {image ? (
               <Image
                 src={image}
-                alt={section.section}
+                alt=""
                 fill
-                sizes="160px"
+                sizes="(min-width: 640px) 192px, 160px"
                 className="object-cover opacity-85 transition-transform duration-500 group-hover:scale-105"
               />
             ) : (
@@ -91,7 +100,7 @@ export function MainCategoryCards({
                 {section.section}
               </h3>
               <p className="flex items-center gap-1 text-[11px] font-semibold text-zinc-400 group-hover:text-amber-400/90 transition-colors">
-                <span>{itemCount} {itemCount === 1 ? 'dish' : 'dishes'}</span>
+                <span>{itemCount} items</span>
                 <span className="transition-transform group-hover:translate-x-0.5">→</span>
               </p>
             </div>

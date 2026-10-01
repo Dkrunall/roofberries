@@ -111,97 +111,100 @@ export function MenuItemRow({ item, categoryName }: { item: MenuItem; categoryNa
   return (
     <div
       className={`overflow-hidden rounded-2xl border transition-all duration-300 ${expanded
-          ? 'border-amber-400/60 bg-[#16161a] shadow-2xl ring-1 ring-amber-400/20'
-          : 'border-white/5 bg-[#121215] hover:border-white/15 hover:bg-[#16161a]'
-        } ${!item.isAvailable ? 'opacity-40' : ''}`}
+          ? 'border-[#b96b80] bg-[#fffdf9] shadow-md ring-1 ring-[#b96b80]/20'
+          : 'border-[#e5ddd2] bg-[#fffdf9] hover:border-[#b96b80]'
+        } ${!item.isAvailable ? 'opacity-60' : ''}`}
     >
       <button
         type="button"
         disabled={!item.isAvailable}
+        aria-expanded={expanded}
+        aria-controls={`item-options-${item.id}`}
         onClick={() => setExpanded((e) => !e)}
-        className="flex w-full items-center justify-between gap-3 sm:gap-4 p-3.5 sm:p-4 text-left disabled:cursor-not-allowed cursor-pointer"
+        className="flex w-full items-stretch text-left disabled:cursor-not-allowed cursor-pointer"
       >
-        <div className="flex items-center gap-3 sm:gap-3.5 min-w-0 flex-1">
-          {isValidImageSrc(item.imageUrl) ? (
-            <div className="relative h-16 w-16 sm:h-18 sm:w-18 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-zinc-900">
-              <Image
-                src={item.imageUrl}
-                alt={item.name}
-                fill
-                sizes="(min-width: 640px) 72px, 64px"
-                className="object-cover transition-transform duration-500 hover:scale-105"
-                unoptimized
-              />
-            </div>
+        {/* Horizontal card: full-height photo strip on the left, details on the right. */}
+        {isValidImageSrc(item.imageUrl) ? (
+          <div className="relative w-28 sm:w-36 shrink-0 self-stretch min-h-32 overflow-hidden bg-[#f5efe6]">
+            <Image
+              src={item.imageUrl}
+              alt={item.name}
+              fill
+              sizes="(min-width: 640px) 144px, 112px"
+              className="object-cover transition-transform duration-500 hover:scale-105"
+              unoptimized
+            />
+          </div>
+        ) : null}
+
+        <div className="flex min-w-0 flex-1 flex-col gap-1.5 p-3.5 sm:p-4">
+          <div className="flex flex-wrap items-center gap-1.5">
+            {item.dietaryType ? <DietaryBadge type={item.dietaryType} /> : null}
+            {item.isAlcoholic ? <AlcoholicBadge /> : null}
+          </div>
+          <p className="font-bold text-[#352c29] text-sm sm:text-base leading-snug tracking-tight">{item.name}</p>
+          {item.description ? (
+            <p className={`${expanded ? '' : 'line-clamp-2'} text-xs sm:text-sm text-[#7b6b60] leading-relaxed font-normal`}>{item.description}</p>
           ) : null}
 
-          <div className="min-w-0 flex-1 space-y-1">
-            <div className="flex flex-wrap items-center gap-1.5">
-              {item.dietaryType ? <DietaryBadge type={item.dietaryType} /> : null}
-              {item.isAlcoholic ? <AlcoholicBadge /> : null}
-            </div>
-            <p className="font-bold text-zinc-100 text-base sm:text-lg leading-snug tracking-tight">{item.name}</p>
-            {item.description ? (
-              <p className="line-clamp-2 text-xs sm:text-sm text-zinc-400 leading-relaxed font-normal">{item.description}</p>
+          <div className="mt-auto flex items-center justify-between gap-3 pt-1">
+            <p className="text-sm sm:text-base font-extrabold text-[#85233e] tracking-tight">{priceLabel}</p>
+            {item.isAvailable ? (
+              <span
+                className={`flex shrink-0 items-center justify-center gap-1 rounded-xl px-3 py-2 text-xs font-bold transition-all shadow-sm active:scale-95 ${justAdded
+                    ? 'bg-emerald-500 text-black shadow-emerald-500/30 scale-105'
+                    : expanded
+                      ? 'border border-[#e5ddd2] bg-[#eee3dc] text-[#61534a]'
+                      : 'bg-[#85233e] text-white hover:bg-[#68182f]'
+                  }`}
+              >
+                {expanded ? 'Close' : justAdded ? (
+                  <>
+                    <CheckIcon className="h-4 w-4" />
+                    Added
+                  </>
+                ) : (
+                  '+ Add'
+                )}
+              </span>
             ) : null}
-            <p className="text-sm sm:text-base font-extrabold text-amber-400 pt-0.5 tracking-tight">{priceLabel}</p>
           </div>
         </div>
-
-        {item.isAvailable ? (
-          <span
-            className={`flex shrink-0 items-center justify-center gap-1 rounded-xl px-4 py-2 text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-95 ${justAdded
-                ? 'bg-emerald-500 text-black shadow-emerald-500/30 scale-105'
-                : expanded
-                  ? 'border border-zinc-700 bg-zinc-800 text-zinc-300'
-                  : 'gold-gradient-btn'
-              }`}
-          >
-            {expanded ? 'Close' : justAdded ? (
-              <>
-                <CheckIcon className="h-4 w-4" />
-                Added
-              </>
-            ) : (
-              '+ Add'
-            )}
-          </span>
-        ) : null}
       </button>
 
       {expanded && item.isAvailable ? (
-        <div className="space-y-4 border-t border-white/5 bg-black/30 p-4 sm:p-5 animate-fadeIn">
+        <div id={`item-options-${item.id}`} className="space-y-4 border-t border-[#e5ddd2] bg-[#faf5ee] p-4 sm:p-5 animate-fadeIn">
           {hasVariants ? (
             <div className="space-y-2.5">
-              <p className="text-xs font-bold text-zinc-400 tracking-wider uppercase">Choose Quantity:</p>
+              <p className="text-xs font-bold text-[#7b6b60] tracking-wider uppercase">Choose Quantity:</p>
               <div className="space-y-2">
                 {item.variants.map((v) => {
                   const qty = variantQty(v.id);
                   return (
                     <div
                       key={v.id}
-                      className={`flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 transition-all ${qty > 0 ? 'border-amber-400/50 bg-amber-500/10' : 'border-white/5 bg-zinc-900/40'
+                      className={`flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3 transition-all ${qty > 0 ? 'border-amber-400/50 bg-[#f6e8ea]' : 'border-[#e5ddd2] bg-[#f5efe6]'
                         }`}
                     >
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-zinc-200">{v.label}</p>
-                        <p className="text-xs sm:text-sm font-extrabold text-amber-400">{formatPrice(v.price)}</p>
+                        <p className="text-sm font-semibold text-[#453a34]">{v.label}</p>
+                        <p className="text-xs sm:text-sm font-extrabold text-[#85233e]">{formatPrice(v.price)}</p>
                       </div>
-                      <div className="flex shrink-0 items-center gap-2 rounded-lg border border-white/10 bg-black/60 p-1">
+                      <div className="flex shrink-0 items-center gap-2 rounded-lg border border-[#e5ddd2] bg-[#fffdf9] p-1">
                         <button
                           type="button"
                           onClick={() => setVariantQty(v.id, qty - 1)}
                           disabled={qty === 0}
-                          className="flex h-8 w-8 items-center justify-center rounded-md text-amber-400 hover:bg-white/10 active:scale-90 text-lg font-bold transition-all disabled:opacity-25 disabled:hover:bg-transparent"
+                          className="flex h-8 w-8 items-center justify-center rounded-md text-[#85233e] hover:bg-white/10 active:scale-90 text-lg font-bold transition-all disabled:opacity-25 disabled:hover:bg-transparent"
                           aria-label={`Decrease ${v.label} quantity`}
                         >
                           −
                         </button>
-                        <span className="w-6 text-center text-sm font-bold text-zinc-100">{qty}</span>
+                        <span className="w-6 text-center text-sm font-bold text-[#352c29]">{qty}</span>
                         <button
                           type="button"
                           onClick={() => setVariantQty(v.id, qty + 1)}
-                          className="flex h-8 w-8 items-center justify-center rounded-md text-amber-400 hover:bg-white/10 active:scale-90 text-lg font-bold transition-all"
+                          className="flex h-8 w-8 items-center justify-center rounded-md text-[#85233e] hover:bg-white/10 active:scale-90 text-lg font-bold transition-all"
                           aria-label={`Increase ${v.label} quantity`}
                         >
                           +
@@ -215,18 +218,19 @@ export function MenuItemRow({ item, categoryName }: { item: MenuItem; categoryNa
           ) : null}
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Special Instructions</label>
+            <label htmlFor={`item-notes-${item.id}`} className="text-xs font-semibold text-[#7b6b60] uppercase tracking-wider">Special Instructions</label>
             <textarea
+              id={`item-notes-${item.id}`}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder='E.g. "Less spicy", "No onion", "Extra ice"...'
               rows={2}
-              className="w-full resize-none rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all"
+              className="w-full resize-none rounded-xl border border-[#e5ddd2] bg-[#fffdf9] px-4 py-2.5 text-xs sm:text-sm text-[#352c29] placeholder-zinc-500 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all"
             />
           </div>
 
           {addFailed ? (
-            <p className="flex items-center gap-1.5 text-xs font-medium text-rose-400">
+            <p className="flex items-center gap-1.5 text-xs font-medium text-rose-700">
               <WarningIcon className="h-4 w-4 shrink-0" />
               Couldn&rsquo;t add — check your connection and try again.
             </p>
@@ -237,7 +241,7 @@ export function MenuItemRow({ item, categoryName }: { item: MenuItem; categoryNa
               type="button"
               onClick={handleAdd}
               disabled={totalVariantQuantity === 0 || isAdding}
-              className="gold-gradient-btn w-full rounded-xl py-3.5 px-4 text-sm font-bold flex items-center justify-between shadow-lg disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="bg-[#85233e] text-white hover:bg-[#68182f] w-full rounded-xl py-3.5 px-4 text-sm font-bold flex items-center justify-between shadow-lg disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               <span>{isAdding ? 'Adding to order…' : 'Add to Order'}</span>
               <span className="rounded-lg bg-black/20 px-2.5 py-0.5 text-xs font-black">
@@ -247,22 +251,22 @@ export function MenuItemRow({ item, categoryName }: { item: MenuItem; categoryNa
           ) : (
             <div className="space-y-3 pt-1">
               {/* Stepper selector row */}
-              <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/50 px-3 py-2">
-                <span className="text-xs font-semibold text-zinc-300">Quantity</span>
+              <div className="flex items-center justify-between rounded-xl border border-[#e5ddd2] bg-[#fffdf9] px-3 py-2">
+                <span className="text-xs font-semibold text-[#61534a]">Quantity</span>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-zinc-900 text-amber-400 hover:bg-zinc-800 active:scale-90 text-base font-bold transition-all cursor-pointer"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#e5ddd2] bg-[#f5efe6] text-[#85233e] hover:bg-[#eee3dc] active:scale-90 text-base font-bold transition-all cursor-pointer"
                     aria-label="Decrease quantity"
                   >
                     −
                   </button>
-                  <span className="w-6 text-center text-sm font-bold text-zinc-100">{quantity}</span>
+                  <span className="w-6 text-center text-sm font-bold text-[#352c29]">{quantity}</span>
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-zinc-900 text-amber-400 hover:bg-zinc-800 active:scale-90 text-base font-bold transition-all cursor-pointer"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#e5ddd2] bg-[#f5efe6] text-[#85233e] hover:bg-[#eee3dc] active:scale-90 text-base font-bold transition-all cursor-pointer"
                     aria-label="Increase quantity"
                   >
                     +
@@ -275,7 +279,7 @@ export function MenuItemRow({ item, categoryName }: { item: MenuItem; categoryNa
                 type="button"
                 onClick={handleAdd}
                 disabled={isAdding}
-                className="gold-gradient-btn w-full rounded-xl py-3.5 px-4 text-sm font-bold flex items-center justify-between shadow-lg disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+                className="bg-[#85233e] text-white hover:bg-[#68182f] w-full rounded-xl py-3.5 px-4 text-sm font-bold flex items-center justify-between shadow-lg disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
               >
                 <span>{isAdding ? 'Adding…' : 'Add to Order'}</span>
                 <span className="rounded-lg bg-black/20 px-2.5 py-0.5 text-xs font-black">

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { CartProvider, useCart } from '@/lib/cart/CartContext';
 import { formatPrice } from '@/lib/format';
 
@@ -235,15 +234,17 @@ export function OrderHeader({
 export function OrderFrame({
   tableNumber,
   showCartBar = true,
+  wide = false,
   children,
 }: {
   tableNumber: number;
   showCartBar?: boolean;
+  wide?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <CartProvider tableNumber={tableNumber}>
-      <div className="mx-auto flex min-h-screen w-full max-w-lg flex-col pb-28 bg-[#09090b]">
+      <div className={`mx-auto flex min-h-screen w-full flex-col pb-28 ${wide ? 'bg-[#faf7f0]' : 'max-w-lg bg-[#09090b]'}`}>
         {children}
         {showCartBar ? <CartBar tableNumber={tableNumber} /> : null}
       </div>

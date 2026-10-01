@@ -30,8 +30,8 @@ export function DietaryBadge({ type }: { type: DietaryType | null }) {
 
 export function AlcoholicBadge() {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-md border border-purple-500/30 bg-purple-950/30 px-2 py-0.5 text-[11px] font-semibold text-purple-300">
-      <span className="h-2 w-2 shrink-0 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(192,132,252,0.6)]" />
+    <span className="inline-flex items-center gap-1.5 rounded-md border border-purple-300 bg-purple-100 px-2 py-0.5 text-[11px] font-bold text-purple-900">
+      <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-purple-700" />
       18+ Cocktail
     </span>
   );
