@@ -31,11 +31,11 @@ export function InstallPromptBanner() {
   if (!show) return null;
 
   return (
-    <div className="flex items-center gap-2.5 rounded-2xl border border-amber-400/30 bg-[#14110e]/95 px-4 py-2.5 text-xs text-amber-100/90 shadow-lg backdrop-blur-xl">
+    <div className="flex items-center gap-2.5 rounded-2xl border border-[#e5d9cc] bg-white px-4 py-2.5 text-xs text-[#30251f] shadow-sm backdrop-blur-xl">
       <span className="shrink-0 text-base">📲</span>
       <p className="flex-1 leading-snug">
-        Add {BRAND.shortName} to your home screen: tap <span className="font-bold text-amber-200">Share</span> then{' '}
-        <span className="font-bold text-amber-200">Add to Home Screen</span>.
+        Add {BRAND.shortName} to your home screen: tap <span className="font-bold text-[#78675c]">Share</span> then{' '}
+        <span className="font-bold text-[#78675c]">Add to Home Screen</span>.
       </p>
       <button
         type="button"
@@ -44,7 +44,7 @@ export function InstallPromptBanner() {
           setShow(false);
         }}
         aria-label="Dismiss"
-        className="shrink-0 rounded-full p-1 text-amber-300/70 hover:bg-amber-500/10 hover:text-amber-200"
+        className="shrink-0 rounded-full p-1 text-[#85233e] hover:bg-[#f4e6e9] hover:text-[#78675c]"
       >
         <CloseIcon className="h-3.5 w-3.5" />
       </button>

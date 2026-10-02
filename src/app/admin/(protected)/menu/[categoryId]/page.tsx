@@ -22,7 +22,7 @@ export default async function AdminCategoryPage({
     <div className="space-y-6">
       <Link
         href="/admin/menu"
-        className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-zinc-900 px-3.5 py-1.5 text-xs font-semibold text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all shadow-sm"
+        className="inline-flex items-center gap-1.5 rounded-xl border border-[#e5dbd0] bg-[#f1eae1] px-3.5 py-1.5 text-xs font-semibold text-[#5c4e44] hover:bg-[#f1eae1] hover:text-[#85233e] transition-all shadow-sm"
       >
         <span>←</span>
         <span>Back to All Categories</span>
@@ -40,13 +40,13 @@ export default async function AdminCategoryPage({
 
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold tracking-widest text-zinc-400 uppercase">Items in this Category</h2>
-          <span className="text-xs font-semibold text-zinc-500">{category.items.length} items</span>
+          <h2 className="text-xs font-bold tracking-widest text-[#796b60] uppercase">Items in this Category</h2>
+          <span className="text-xs font-semibold text-[#796b60]">{category.items.length} items</span>
         </div>
 
         {category.items.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#121215] p-8 text-center">
-            <p className="text-sm font-medium text-zinc-400">No items in this category yet.</p>
+          <div className="rounded-2xl border border-[#e5dbd0] bg-[#fffdf9] p-8 text-center">
+            <p className="text-sm font-medium text-[#796b60]">No items in this category yet.</p>
           </div>
         ) : (
           <div className="space-y-2.5">

@@ -33,7 +33,7 @@ export function MenuItemAdminRow({ item, categoryId }: { item: MenuItem; categor
 
   if (editing) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-[#16161a] p-4 sm:p-5 shadow-2xl">
+      <div className="rounded-2xl border border-[#e5dbd0] bg-[#fffdf9] p-4 sm:p-5 shadow-2xl">
         <MenuItemForm
           categoryId={categoryId}
           itemId={item.id}
@@ -56,10 +56,10 @@ export function MenuItemAdminRow({ item, categoryId }: { item: MenuItem; categor
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-[#121215] p-3.5 sm:p-4 shadow-lg transition-all hover:border-white/20 hover:bg-[#16161a]">
+    <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-[#e5dbd0] bg-[#fffdf9] p-3.5 sm:p-4 shadow-lg transition-all hover:border-[#e5dbd0] hover:bg-[#fffdf9]">
       <div className="min-w-0 basis-full sm:flex-1 space-y-0.5">
-        <p className="truncate font-bold text-zinc-100 text-sm sm:text-base">{item.name}</p>
-        <p className="text-xs font-semibold text-amber-400">
+        <p className="truncate font-bold text-[#352c29] text-sm sm:text-base">{item.name}</p>
+        <p className="text-xs font-semibold text-[#85233e]">
           {item.variants.length > 0
             ? `From ${formatPrice(Math.min(...item.variants.map((v) => v.price)))} · ${item.variants.length} variant(s)`
             : formatPrice(item.price)}
@@ -72,8 +72,8 @@ export function MenuItemAdminRow({ item, categoryId }: { item: MenuItem; categor
           disabled={isPending}
           className={`rounded-xl border px-3 py-1.5 text-xs font-bold transition-all cursor-pointer ${
             item.isAvailable
-              ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-              : 'border-rose-500/40 bg-rose-500/10 text-rose-300'
+              ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700'
+              : 'border-rose-500/40 bg-rose-500/10 text-rose-700'
           }`}
         >
           {item.isAvailable ? 'Available' : 'Sold Out'}
@@ -81,7 +81,7 @@ export function MenuItemAdminRow({ item, categoryId }: { item: MenuItem; categor
         <button
           type="button"
           onClick={() => setEditing(true)}
-          className="rounded-xl border border-white/10 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all cursor-pointer"
+          className="rounded-xl border border-[#e5dbd0] bg-[#f1eae1] px-3 py-1.5 text-xs font-semibold text-[#5c4e44] hover:bg-[#f1eae1] hover:text-[#85233e] transition-all cursor-pointer"
         >
           Edit
         </button>
@@ -89,7 +89,7 @@ export function MenuItemAdminRow({ item, categoryId }: { item: MenuItem; categor
           type="button"
           onClick={handleDelete}
           disabled={isPending}
-          className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 transition-all cursor-pointer"
+          className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-500/20 transition-all cursor-pointer"
         >
           Delete
         </button>

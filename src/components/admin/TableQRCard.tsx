@@ -45,12 +45,12 @@ export function TableQRCard({ table }: { table: AdminTable }) {
   return (
     <div className={`flex flex-col items-center gap-2.5 sm:gap-3 rounded-2xl border p-3.5 sm:p-4 shadow-lg transition-all ${
       !table.isActive
-        ? 'opacity-40 border-white/5 bg-black/20'
-        : 'border-white/10 bg-[#121215] hover:border-amber-400/40'
+        ? 'opacity-40 border-[#e5dbd0] bg-[#f5efe7]'
+        : 'border-[#e5dbd0] bg-[#fffdf9] hover:border-amber-400/40'
     }`}>
       <div className="flex items-center gap-2">
         <span className={`h-2 w-2 rounded-full ${table.isActive ? 'bg-emerald-400' : 'bg-rose-500'}`} />
-        <p className="font-bold text-zinc-100 text-sm">Table {table.tableNumber}</p>
+        <p className="font-bold text-[#352c29] text-sm">Table {table.tableNumber}</p>
       </div>
 
       {dataUrl ? (
@@ -63,7 +63,7 @@ export function TableQRCard({ table }: { table: AdminTable }) {
           />
         </div>
       ) : (
-        <div className="h-20 w-20 sm:h-24 sm:w-24 animate-pulse rounded-xl bg-zinc-900 border border-white/5" />
+        <div className="h-20 w-20 sm:h-24 sm:w-24 animate-pulse rounded-xl bg-[#f1eae1] border border-[#e5dbd0]" />
       )}
 
       <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1 text-xs font-semibold">
@@ -71,7 +71,7 @@ export function TableQRCard({ table }: { table: AdminTable }) {
           <a
             href={dataUrl}
             download={`${BRAND.slug}-table-${table.tableNumber}-qr.png`}
-            className="text-amber-400 hover:text-amber-300 transition-colors"
+            className="text-[#85233e] hover:text-[#85233e] transition-colors"
           >
             Save QR
           </a>
@@ -80,7 +80,7 @@ export function TableQRCard({ table }: { table: AdminTable }) {
           type="button"
           onClick={handleToggleActive}
           disabled={isPending}
-          className="text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+          className="text-[#796b60] hover:text-[#352c29] transition-colors cursor-pointer"
         >
           {table.isActive ? 'Disable' : 'Enable'}
         </button>
@@ -88,7 +88,7 @@ export function TableQRCard({ table }: { table: AdminTable }) {
           type="button"
           onClick={handleDelete}
           disabled={isPending}
-          className="text-rose-400 hover:text-rose-300 transition-colors cursor-pointer"
+          className="text-rose-700 hover:text-rose-700 transition-colors cursor-pointer"
         >
           Delete
         </button>

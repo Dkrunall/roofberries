@@ -27,7 +27,7 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="mb-1.5 block text-xs font-semibold text-zinc-300">
+        <label htmlFor="email" className="mb-1.5 block text-xs font-semibold text-[#5c4e44]">
           Email Address
         </label>
         <input
@@ -37,12 +37,12 @@ export function LoginForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="admin@opabar.com"
-          className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all"
+          placeholder="you@example.com"
+          className="w-full rounded-xl border border-[#e5dbd0] bg-[#f5efe7] px-4 py-3 text-sm text-[#352c29] placeholder-zinc-500 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all"
         />
       </div>
       <div>
-        <label htmlFor="password" className="mb-1.5 block text-xs font-semibold text-zinc-300">
+        <label htmlFor="password" className="mb-1.5 block text-xs font-semibold text-[#5c4e44]">
           Password
         </label>
         <input
@@ -53,12 +53,12 @@ export function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
-          className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all"
+          className="w-full rounded-xl border border-[#e5dbd0] bg-[#f5efe7] px-4 py-3 text-sm text-[#352c29] placeholder-zinc-500 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all"
         />
       </div>
 
       {error ? (
-        <div className="flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-950/40 p-3 text-xs font-medium text-rose-300">
+        <div role="alert" className="flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-50 p-3 text-xs font-medium text-rose-700">
           <WarningIcon className="h-4 w-4 shrink-0" />
           {error}
         </div>

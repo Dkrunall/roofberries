@@ -21,13 +21,13 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
   ];
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col bg-[#09090b]">
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#09090b]/95 backdrop-blur-2xl shadow-xl">
+    <div className="flex min-h-screen flex-1 flex-col bg-background">
+      <header className="sticky top-0 z-30 border-b border-[#e5dbd0] bg-[#fffdf9] backdrop-blur-2xl shadow-xl">
         <div className="mx-auto max-w-6xl px-3 sm:px-6 py-2.5 sm:py-3">
           <div className="flex items-center justify-between gap-2.5 sm:gap-4">
             {/* Logo & Brand */}
             <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
-              <div className="relative flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 shadow-md">
+              <div className="relative flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#e5dbd0] shadow-md">
                 <Image
                   src={BRAND.logo}
                   alt={`${BRAND.shortName} logo`}
@@ -37,12 +37,12 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
                 />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-xs sm:text-sm font-extrabold tracking-tight text-zinc-100">
+                <p className="truncate text-xs sm:text-sm font-extrabold tracking-tight text-[#352c29]">
                   {BRAND.shortName} Admin
                 </p>
                 <div className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  <p className="truncate text-[10px] uppercase font-bold text-amber-400">
+                  <p className="truncate text-[10px] uppercase font-bold text-[#85233e]">
                     {admin.role}
                   </p>
                 </div>
@@ -51,13 +51,13 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
 
             {/* Profile info & Sign Out */}
             <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-              <span className="hidden md:inline-block text-xs font-medium text-zinc-400">
+              <span className="hidden md:inline-block text-xs font-medium text-[#796b60]">
                 {admin.email}
               </span>
               <form action={signOut}>
                 <button
                   type="submit"
-                  className="rounded-xl border border-white/10 bg-zinc-900 px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-zinc-300 hover:bg-white/10 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
+                  className="rounded-xl border border-[#e5dbd0] bg-[#f1eae1] px-3 sm:px-3.5 py-1.5 text-xs font-semibold text-[#5c4e44] hover:bg-[#f1eae1] hover:text-[#85233e] active:scale-95 transition-all cursor-pointer shadow-sm"
                 >
                   Sign Out
                 </button>

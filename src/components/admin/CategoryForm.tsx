@@ -86,7 +86,7 @@ export function CategoryForm({
       >
         {isPending ? 'Saving…' : categoryId ? 'Save' : 'Add category'}
       </button>
-      {error ? <p className="w-full text-sm text-red-700 dark:text-red-400">{error}</p> : null}
+      {error ? <p className="w-full text-sm text-red-700 dark:text-red-700">{error}</p> : null}
     </form>
   );
 }

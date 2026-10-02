@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { CartProvider, useCart } from '@/lib/cart/CartContext';
 import { formatPrice } from '@/lib/format';
+import styles from './OrderFlow.module.css';
 
 function CartBar({ tableNumber }: { tableNumber: number }) {
   const { totalItems, totalPrice } = useCart();
@@ -12,23 +13,23 @@ function CartBar({ tableNumber }: { tableNumber: number }) {
     <div className="fixed inset-x-0 bottom-0 z-30 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pointer-events-none flex justify-center">
       <Link
         href={`/order/cart?table=${tableNumber}`}
-        className="gold-gradient-btn pointer-events-auto w-full max-w-lg flex items-center justify-between gap-3 sm:gap-4 rounded-2xl px-4 sm:px-5 py-3.5 shadow-2xl border border-yellow-300/40"
+        className="bg-[#85233e] text-white pointer-events-auto w-full max-w-lg flex items-center justify-between gap-3 sm:gap-4 rounded-2xl px-4 sm:px-5 py-3.5 shadow-xl border border-white/20 hover:bg-[#6c1c32] transition-colors"
       >
         <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black text-amber-300 text-xs font-extrabold">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white text-sm font-bold">
             {totalItems}
           </span>
           <div className="flex min-w-0 flex-col text-left">
-            <span className="whitespace-nowrap text-[11px] font-bold uppercase tracking-wider text-black/75">
+            <span className="whitespace-nowrap text-[11px] font-medium text-white/80">
               Review Cart
             </span>
-            <span className="whitespace-nowrap text-sm sm:text-base font-extrabold text-black tracking-tight">
+            <span className="whitespace-nowrap text-sm sm:text-base font-bold text-white tracking-tight">
               {formatPrice(totalPrice)}
             </span>
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 rounded-xl bg-black px-3.5 py-2 text-xs font-bold text-amber-300 shadow-md">
+        <div className="flex shrink-0 items-center gap-1.5 rounded-xl bg-white px-3.5 py-2 text-xs font-bold text-[#85233e]">
           <span className="whitespace-nowrap">View Order</span>
           <span className="text-sm font-bold">→</span>
         </div>
@@ -267,9 +268,15 @@ export function OrderShell({
   children: React.ReactNode;
 }) {
   return (
-    <OrderFrame tableNumber={tableNumber} showCartBar={showCartBar}>
-      <OrderHeader tableNumber={tableNumber} title={title} backHref={backHref} />
-      <main className="flex-1 px-4 pt-4">{children}</main>
+    <OrderFrame tableNumber={tableNumber} showCartBar={showCartBar} wide>
+      <div className={styles.flow}>
+        <header className={styles.header}>
+          <Link href={backHref ?? `/order?table=${tableNumber}`} aria-label="Back to menu" className={styles.back}>←</Link>
+          <h1 className={styles.title}>{title}</h1>
+          <span className={styles.table}>Table {tableNumber}</span>
+        </header>
+        <main className={styles.main}>{children}</main>
+      </div>
     </OrderFrame>
   );
 }

@@ -1,9 +1,10 @@
 .site { --berry: #85233e; --ink: #322d29; --paper: #faf7f0; background: var(--paper); color: var(--ink); min-height: 100vh; }
 .simpleMenu { max-width: 900px; width: 100%; margin: auto; padding: 0 !important; }
-.simpleNav { display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 16px 20px; }
+.simpleNav { display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 16px 20px; position: sticky; top: 0; z-index: 20; background: #faf7f0f5; backdrop-filter: blur(16px); }
 .simpleNav > .navActions { margin-left: auto; gap: 14px; }
 .simpleNav > a:last-child { margin-left: auto; }
-.simpleNav h1 { font-size: 20px; }
+.simpleNav h1 { font-size: 20px; min-width: 0; line-height: 1.2; }
+.simpleNav h1:focus, .simpleTitle:focus { outline: none; }
 .simpleNav .wordmark { font-size: 27px; }
 .backButton { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; border: 1px solid #ded4cb; font-size: 23px; }
 .compactHero { position: relative; height: 230px; overflow: hidden; margin: 0 16px; border-radius: 22px; }
@@ -26,7 +27,9 @@
 .dietToggle button[aria-pressed=true] .dietDot { background: white; }
 @media (max-width: 600px) { .dietControls { width: 100%; } .dietToggle button { padding-inline: 12px; } }
 .simpleTitle { font-size: 20px; margin-bottom: 16px; }
-.subcategoryPills { display: flex; gap: 8px; overflow-x: auto; padding: 3px 3px 13px; margin-bottom: 12px; scrollbar-width: thin; }
+.subcategoryPills { display: flex; gap: 8px; overflow-x: auto; padding: 5px 3px 13px; margin-bottom: 12px; scrollbar-width: none; }
+.subcategoryPills::-webkit-scrollbar { display: none; }
+.subcategoryPills button { transition: background .18s, color .18s; }
 .subcategoryPills button { flex-shrink: 0; border: 1px solid #dfd4c9; border-radius: 30px; padding: 12px 17px; font-size: 12px; min-height: 44px; }
 .subcategoryPills button[aria-pressed=true] { background: var(--berry); border-color: var(--berry); color: white; }
 .simpleResultTitle { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 8px 0 17px; }
@@ -97,11 +100,12 @@
 .menuTitle h2 span { color: var(--berry); font-size: 28px; margin-left: 16px; }
 .menuTitle > p { font-size: 11px; color: #82766a; }
 .toolbar { display: flex; gap: 15px; justify-content: space-between; align-items: center; }
-.search { display: flex; align-items: center; gap: 10px; background: #fffdf9; border: 1px solid #e1d9ce; border-radius: 8px; padding: 0 14px; flex: 1; max-width: 490px; }
+.search { display: flex; align-items: center; gap: 10px; background: #fffdf9; border: 1px solid #e1d9ce; border-radius: 14px; padding: 0 14px; flex: 1; min-width: 0; max-width: 490px; transition: border-color .18s, box-shadow .18s; }
+.search:focus-within { border-color: #a34b63; box-shadow: 0 0 0 3px #85233e10; }
 .search svg { width: 17px; height: 17px; flex-shrink: 0; color: #87786d; }
-.search input { width: 100%; min-width: 0; padding: 15px 0; background: transparent; font-size: 12px; outline-offset: 1px !important; }
+.search input { width: 100%; min-width: 0; padding: 15px 0; background: transparent; font-size: 16px; outline: none !important; }
 .filters { display: flex; gap: 6px; }
-.filters button { padding: 12px 15px; border: 1px solid #e1d9ce; border-radius: 7px; font-size: 11px; white-space: nowrap; }
+.filters button { padding: 12px 15px; border: 1px solid #e1d9ce; border-radius: 999px; font-size: 12px; white-space: nowrap; background: #fffdf9; }
 .filters button[aria-pressed=true], .filters .filterActive { background: #e9eee2; border-color: #83916e; color: #40512d; }
 .sectionTabs { display: flex; gap: 26px; overflow-x: auto; margin-top: 25px; border-bottom: 1px solid #ded6cb; scrollbar-width: thin; }
 .sectionTabs button { white-space: nowrap; font-size: 12px; padding: 17px 0; border-bottom: 3px solid transparent; color: #82766a; }

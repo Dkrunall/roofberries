@@ -99,18 +99,18 @@ export function ServiceRequestButtons({ tableNumber }: { tableNumber: number }) 
               onClick={() => handleRequest(type)}
               disabled={isPending}
               className={`flex items-center justify-center gap-2 rounded-xl border px-3 sm:px-4 py-3 sm:py-3.5 text-xs sm:text-sm font-bold transition-all cursor-pointer ${isPending
-                  ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-300 cursor-default'
-                  : 'border-white/10 bg-zinc-900/80 text-zinc-200 hover:border-amber-400/40 hover:bg-zinc-800 active:scale-95 shadow-sm'
+                  ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-800 cursor-default'
+                  : 'border-[#e5d9cc] bg-[#f5efe6] text-[#30251f] hover:border-[#e5d9cc] hover:bg-[#e5d9cc] active:scale-95 shadow-sm'
                 }`}
             >
-              {isPending ? <CheckIcon className="h-4 w-4 text-emerald-400" /> : <Icon className="h-4 w-4 text-amber-400" />}
+              {isPending ? <CheckIcon className="h-4 w-4 text-emerald-800" /> : <Icon className="h-4 w-4 text-[#85233e]" />}
               <span className="truncate">{isPending ? pendingLabel : idle}</span>
             </button>
           );
         })}
       </div>
       {error ? (
-        <p className="flex items-center gap-1.5 text-xs font-medium text-rose-400">
+        <p className="flex items-center gap-1.5 text-xs font-medium text-rose-700">
           <WarningIcon className="h-4 w-4 shrink-0" />
           {error}
         </p>

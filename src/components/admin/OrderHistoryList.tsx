@@ -71,13 +71,13 @@ export function OrderHistoryList({
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-amber-200/60">
+      <p className="text-sm text-[#85233e]">
         {orders.length} order{orders.length === 1 ? '' : 's'} · {formatPrice(totalRevenue)} total
       </p>
 
       <div className="space-y-2">
         {orders.length === 0 ? (
-          <p className="py-8 text-center text-sm text-amber-200/50">No orders found for these filters.</p>
+          <p className="py-8 text-center text-sm text-[#85233e]">No orders found for these filters.</p>
         ) : (
           orders.map((order) => (
             <OrderHistoryRow

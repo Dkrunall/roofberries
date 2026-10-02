@@ -45,20 +45,20 @@ function StatusStepper({ status }: { status: OrderStatus }) {
         const done = i <= currentIndex;
         const isCurrent = i === currentIndex;
         return (
-          <div key={step.status} className="flex flex-1 flex-col items-center">
+          <div key={step.status} aria-current={isCurrent ? 'step' : undefined} className="flex flex-1 flex-col items-center">
             <div className="flex w-full items-center">
-              <div className={`h-[2px] flex-1 ${i === 0 ? 'invisible' : done ? 'bg-amber-400' : 'bg-zinc-800'}`} />
+              <div className={`h-[2px] flex-1 ${i === 0 ? 'invisible' : done ? 'bg-[#85233e]' : 'bg-[#e5d9cc]'}`} />
               <div
                 className={`relative flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl border transition-all ${done
-                    ? 'border-amber-500 bg-amber-500 text-white font-extrabold shadow-md'
-                    : 'border-white/10 bg-zinc-900 text-zinc-500'
-                  } ${isCurrent ? 'ring-2 ring-amber-400/40 scale-110' : ''}`}
+                    ? 'border-[#e5d9cc] bg-[#85233e] text-white font-extrabold shadow-md'
+                    : 'border-[#e5d9cc] bg-[#f5efe6] text-[#78675c]'
+                  } ${isCurrent ? 'ring-2 ring-[#85233e]/20 scale-110' : ''}`}
               >
                 {done ? <step.icon className="h-4 w-4 sm:h-5 sm:w-5" /> : <span className="text-xs sm:text-sm font-bold">{i + 1}</span>}
               </div>
-              <div className={`h-[2px] flex-1 ${i === STEPS.length - 1 ? 'invisible' : done ? 'bg-amber-400' : 'bg-zinc-800'}`} />
+              <div className={`h-[2px] flex-1 ${i === STEPS.length - 1 ? 'invisible' : i < currentIndex ? 'bg-[#85233e]' : 'bg-[#e5d9cc]'}`} />
             </div>
-            <p className={`mt-2 text-[10px] sm:text-xs font-bold text-center ${done ? 'text-zinc-200' : 'text-zinc-500'}`}>
+            <p className={`mt-2 text-[10px] sm:text-xs font-bold text-center ${done ? 'text-[#30251f]' : 'text-[#78675c]'}`}>
               {step.label}
             </p>
           </div>
@@ -81,6 +81,12 @@ export function OrderStatusView({
   const statusRef = useRef(order.status);
   const [notificationPermission, setNotificationPermission] = useState<NotificationPermission | 'unsupported' | null>(null);
   const [liveRunningTotal, setLiveRunningTotal] = useState(runningTotal);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`roofberries-order-${order.tableNumber}`, order.id);
+    } catch { /* Tracking works even if browser storage is unavailable. */ }
+  }, [order.id, order.tableNumber]);
 
   // Reflects whatever the customer answered at the "Send Order to Kitchen"
   // prompt (see CartReview.tsx) — this page never asks itself, it only
@@ -241,20 +247,20 @@ export function OrderStatusView({
       <InstallPromptBanner />
 
       {/* Main status tracking card */}
-      <div className="overflow-hidden rounded-3xl border border-amber-500/30 bg-gradient-to-b from-[#1c1814] via-[#15120f] to-[#100e0b] p-6 shadow-2xl space-y-6 gold-glow-sm">
-        <div className="flex items-center justify-between border-b border-amber-900/30 pb-4">
+      <div className="overflow-hidden rounded-3xl border border-[#e5d9cc] bg-white p-6 shadow-sm space-y-6 ">
+        <div className="flex items-center justify-between border-b border-[#e5d9cc] pb-4">
           <div>
-            <p className="text-[10px] font-black tracking-widest text-amber-400 uppercase">Live Order Tracking</p>
-            <h2 className="text-lg font-black text-amber-50">Order #{order.id.slice(0, 8)}</h2>
+            <p className="text-[10px] font-semibold tracking-widest text-[#85233e] uppercase">Your table order</p>
+            <h2 className="text-lg font-semibold text-[#30251f]">Order #{order.id.slice(0, 8)}</h2>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/15 px-3.5 py-1 text-xs font-black text-amber-300 shadow-inner">
-              <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-              <span>Live Sync</span>
+            <div className="flex items-center gap-2 rounded-full border border-[#e5d9cc] bg-[#f4e6e9] px-3.5 py-1 text-xs font-semibold text-[#85233e] ">
+              <span className="h-2 w-2 rounded-full bg-[#85233e] " />
+              <span>Tracking</span>
             </div>
             {notificationPermission === 'granted' ? (
               <div
-                className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3 py-1 text-xs font-black text-emerald-300"
+                className="flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-800"
                 title="You'll get a notification the moment your order is ready"
               >
                 <BellIcon className="h-3 w-3" />
@@ -262,7 +268,7 @@ export function OrderStatusView({
               </div>
             ) : notificationPermission === 'denied' ? (
               <div
-                className="flex items-center gap-1.5 rounded-full border border-amber-900/40 bg-black/40 px-3 py-1 text-xs font-black text-amber-200/50"
+                className="flex items-center gap-1.5 rounded-full border border-[#e5d9cc] bg-[#f5efe6] px-3 py-1 text-xs font-semibold text-[#78675c]"
                 title="Notifications blocked — enable them in your browser's site settings"
               >
                 <BellOffIcon className="h-3 w-3" />
@@ -275,44 +281,44 @@ export function OrderStatusView({
         <StatusStepper status={order.status} />
 
         {notificationPermission === 'denied' ? (
-          <p className="-mt-2 flex items-center gap-1.5 text-[11px] text-amber-200/50">
+          <p className="-mt-2 flex items-center gap-1.5 text-[11px] text-[#78675c]">
             <BellOffIcon className="h-3 w-3 shrink-0" />
-            Notifications are blocked for this site — enable them in your browser settings to get alerted the moment your order is ready.
+            Keep this page open for order updates.
           </p>
         ) : null}
 
-        <div className="rounded-2xl border border-amber-500/30 bg-black/60 p-4 text-center shadow-inner">
+        <div role="status" aria-live="polite" className="rounded-2xl border border-[#e5d9cc] bg-[#f5efe6] p-4 text-center ">
           {order.status === 'served' ? (
             <div className="space-y-1">
-              <p className="flex items-center justify-center gap-1.5 text-base font-black text-amber-300">
+              <p className="flex items-center justify-center gap-1.5 text-base font-semibold text-[#85233e]">
                 <SparkleIcon className="h-4 w-4" />
                 Order Served!
               </p>
-              <p className="text-xs text-amber-200/70 font-medium">Thank you for dining with {BRAND.name}. Enjoy your meal!</p>
+              <p className="text-xs text-[#78675c] font-medium">Thank you for dining with {BRAND.name}. Enjoy your meal!</p>
             </div>
           ) : order.status === 'ready' ? (
             <div className="space-y-1">
-              <p className="flex items-center justify-center gap-1.5 text-base font-black text-amber-400 animate-pulse">
+              <p className="flex items-center justify-center gap-1.5 text-base font-semibold text-[#85233e] animate-pulse">
                 <BellIcon className="h-4 w-4" />
                 Your Order is Ready!
               </p>
-              <p className="text-xs text-amber-200/70 font-medium">Our staff is serving your items to Table {order.tableNumber}.</p>
+              <p className="text-xs text-[#78675c] font-medium">Our staff is serving your items to Table {order.tableNumber}.</p>
             </div>
           ) : order.status === 'preparing' ? (
             <div className="space-y-1">
-              <p className="flex items-center justify-center gap-1.5 text-base font-black text-amber-200">
+              <p className="flex items-center justify-center gap-1.5 text-base font-semibold text-[#78675c]">
                 <PotIcon className="h-4 w-4" />
-                Kitchen is Preparing Your Order
+                Freshly preparing
               </p>
-              <p className="text-xs text-amber-200/70 font-medium">Hang tight! Your chef-crafted order is being freshly prepared.</p>
+              <p className="text-xs text-[#78675c] font-medium">Your food is on its way from our kitchen.</p>
             </div>
           ) : (
             <div className="space-y-1">
-              <p className="flex items-center justify-center gap-1.5 text-base font-black text-amber-200">
+              <p className="flex items-center justify-center gap-1.5 text-base font-semibold text-[#78675c]">
                 <ClipboardIcon className="h-4 w-4" />
-                Order Received by Kitchen
+                Order received
               </p>
-              <p className="text-xs text-amber-200/70 font-medium">We&rsquo;ll update this screen live as your order progresses.</p>
+              <p className="text-xs text-[#78675c] font-medium">We&rsquo;ll update this screen live as your order progresses.</p>
             </div>
           )}
         </div>
@@ -322,44 +328,44 @@ export function OrderStatusView({
       <ServiceRequestButtons tableNumber={order.tableNumber} />
 
       {/* Order receipt details */}
-      <div className="rounded-3xl border border-amber-500/20 bg-[#161310] p-5 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between border-b border-amber-900/30 pb-3">
-          <h3 className="text-xs font-black tracking-widest text-amber-400 uppercase">Order Summary</h3>
-          <span className="text-xs text-amber-200/70 font-bold">Table {order.tableNumber}</span>
+      <div className="rounded-3xl border border-[#e5d9cc] bg-white p-5 space-y-4 shadow-sm">
+        <div className="flex items-center justify-between border-b border-[#e5d9cc] pb-3">
+          <h3 className="text-xs font-semibold tracking-widest text-[#85233e] uppercase">Order Summary</h3>
+          <span className="text-xs text-[#78675c] font-bold">Table {order.tableNumber}</span>
         </div>
 
         <div className="space-y-3">
           {order.items.map((item) => (
-            <div key={item.id} className="flex items-start justify-between gap-3 border-b border-amber-900/20 pb-3">
+            <div key={item.id} className="flex items-start justify-between gap-3 border-b border-[#e5d9cc] pb-3">
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-black text-amber-50">
+                <p className="text-sm font-semibold text-[#30251f]">
                   {item.quantity} × {item.menuItemName}
                 </p>
                 {item.variantLabel ? (
-                  <p className="text-xs text-amber-300 font-bold">{item.variantLabel}</p>
+                  <p className="text-xs text-[#85233e] font-bold">{item.variantLabel}</p>
                 ) : null}
                 {item.notes ? (
-                  <p className="text-xs text-amber-200/70 italic">&ldquo;{item.notes}&rdquo;</p>
+                  <p className="text-xs text-[#78675c] italic">&ldquo;{item.notes}&rdquo;</p>
                 ) : null}
               </div>
-              <p className="shrink-0 text-sm font-black text-amber-400">
+              <p className="shrink-0 text-sm font-semibold text-[#85233e]">
                 {formatPrice(item.priceAtOrder * item.quantity)}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-2 text-base font-black text-amber-50">
-          <span>Total Paid / Due</span>
-          <span className="text-amber-400 text-xl font-black">{formatPrice(total)}</span>
+        <div className="flex items-center justify-between pt-2 text-base font-semibold text-[#30251f]">
+          <span>Order total</span>
+          <span className="text-[#85233e] text-xl font-semibold">{formatPrice(total)}</span>
         </div>
 
         {liveRunningTotal && liveRunningTotal.orderCount > 1 ? (
-          <div className="flex items-center justify-between border-t border-amber-900/30 pt-3 text-xs">
-            <span className="text-amber-200/60 font-semibold">
+          <div className="flex items-center justify-between border-t border-[#e5d9cc] pt-3 text-xs">
+            <span className="text-[#78675c] font-semibold">
               Table {order.tableNumber} total so far ({liveRunningTotal.orderCount} orders)
             </span>
-            <span className="font-black text-amber-200">{formatPrice(liveRunningTotal.totalAmount)}</span>
+            <span className="font-semibold text-[#78675c]">{formatPrice(liveRunningTotal.totalAmount)}</span>
           </div>
         ) : null}
       </div>

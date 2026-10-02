@@ -1,0 +1,40 @@
+.flow {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  color: #30251f;
+  --color-card-border: #e5d9cc;
+}
+.flow :is(button, a, input, textarea):focus-visible {
+  outline: 2px solid #85233e;
+  outline-offset: 3px;
+}
+.flow :is(input, textarea) { font-size: 16px; }
+.flow button { cursor: pointer; }
+.flow button:disabled { cursor: default; }
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #e5d9cc;
+  background: #faf7f0f2;
+  backdrop-filter: blur(16px);
+}
+.back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e5d9cc;
+  border-radius: 50%;
+  background: white;
+  color: #85233e;
+  font-size: 22px;
+}
+.title { flex: 1; font-size: 20px; font-weight: 650; }
+.table { border-radius: 999px; background: #f4e6e9; color: #85233e; padding: 8px 12px; font-size: 12px; font-weight: 650; }
+.main { padding: 24px 16px; }

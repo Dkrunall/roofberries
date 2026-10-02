@@ -48,12 +48,7 @@ function totalItemCount(section: MenuSection): number {
   return section.categories.reduce((n, cat) => n + cat.items.length, 0);
 }
 
-/**
- * Horizontal strip of full-bleed photo cards, one per main category —
- * mirrors a restaurant app's "browse by category" hero row: a real dish
- * photo fills the card, with the category name overlaid at the bottom.
- * Tapping one drills into that category's subcategories.
- */
+/** Photo grid with direct access to each section's subcategories. */
 export function MainCategoryCards({
   sections,
   onSelect,
@@ -62,10 +57,7 @@ export function MainCategoryCards({
   onSelect: (section: string) => void;
 }) {
   return (
-    // Horizontal swipe row: fixed-width cards with scroll snapping, bled to
-    // the screen edges (-mx-4/px-4 cancels simpleMain's 16px padding) so the
-    // next card peeks in and signals there's more to swipe.
-    <div className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-3 no-scrollbar">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
       {sections.map((section) => {
         const image = representativeImage(section);
         const itemCount = totalItemCount(section);
@@ -75,14 +67,14 @@ export function MainCategoryCards({
             key={section.section}
             type="button"
             onClick={() => onSelect(section.section)}
-            className="group relative h-52 w-40 shrink-0 snap-start overflow-hidden rounded-2xl bg-[#352c29] shadow-md transition-transform duration-200 hover:-translate-y-1 active:scale-[0.97] cursor-pointer sm:h-60 sm:w-48"
+            className="group relative aspect-[1.08] min-w-0 overflow-hidden rounded-2xl bg-[#352c29] shadow-sm transition-transform duration-200 hover:-translate-y-1 active:scale-[0.98] cursor-pointer"
           >
             {image ? (
               <Image
                 src={image}
                 alt=""
                 fill
-                sizes="(min-width: 640px) 192px, 160px"
+                sizes="(min-width: 900px) 280px, (min-width: 640px) 30vw, 45vw"
                 className="object-cover opacity-85 transition-transform duration-500 group-hover:scale-105"
               />
             ) : (
@@ -96,10 +88,10 @@ export function MainCategoryCards({
 
             {/* Minimal label overlay */}
             <div className="relative z-10 flex h-full flex-col justify-end p-3 text-left">
-              <h3 className="truncate text-sm sm:text-base font-bold text-zinc-100 group-hover:text-amber-300 transition-colors">
+              <h3 className="text-sm sm:text-base font-bold text-white leading-snug">
                 {section.section}
               </h3>
-              <p className="flex items-center gap-1 text-[11px] font-semibold text-zinc-400 group-hover:text-amber-400/90 transition-colors">
+              <p className="mt-1 flex items-center justify-between text-[11px] font-medium text-white/80">
                 <span>{itemCount} items</span>
                 <span className="transition-transform group-hover:translate-x-0.5">→</span>
               </p>

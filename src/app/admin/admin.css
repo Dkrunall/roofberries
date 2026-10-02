@@ -1,0 +1,38 @@
+.admin-ui {
+  --background: #faf7f0;
+  --foreground: #352c29;
+  --card: #fffdf9;
+  --card-border: #e5dbd0;
+  --muted: #796b60;
+  --accent: #85233e;
+  --accent-foreground: #fff;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  color-scheme: light;
+}
+.admin-ui :is(button, a, input, select, textarea):focus-visible { outline: 3px solid #a44c64; outline-offset: 3px; }
+.admin-ui :is(button, input:not([type=checkbox]), select) { min-height: 42px; }
+.admin-ui input[type=checkbox] { accent-color: #85233e; width: 16px; height: 16px; }
+.admin-ui button:not(:disabled), .admin-ui select { cursor: pointer; }
+.admin-ui button:disabled { cursor: not-allowed; }
+.admin-ui :is(input, select, textarea) { color-scheme: light; }
+.admin-ui .gold-gradient-btn { background: #85233e; color: white; box-shadow: 0 3px 8px #85233e18; letter-spacing: 0; }
+.admin-ui .gold-gradient-btn:hover { background: #6b1931; }
+.admin-ui .gold-text, .admin-ui .gold-text-gradient { background: none; color: #85233e; -webkit-text-fill-color: #85233e; }
+.admin-ui :is(.shadow-lg, .shadow-xl, .shadow-2xl) { box-shadow: 0 4px 18px #49352308; }
+/* Shared status styles are also used by the dark customer order tracker. */
+.admin-ui .text-emerald-300, .admin-ui .text-emerald-400 { color: #166b49; }
+.admin-ui .text-sky-300, .admin-ui .text-sky-400 { color: #075985; }
+.admin-ui .text-rose-300, .admin-ui .text-rose-400 { color: #a12343; }
+.admin-ui .text-amber-300, .admin-ui .text-amber-400 { color: #85233e; }
+.admin-ui .text-zinc-400 { color: #796b60; }
+.admin-ui .admin-login { min-height: 100vh; display: grid; place-items: center; padding: 32px 20px; background: radial-gradient(ellipse at top, #f0e1e0, transparent 65%), #faf7f0; }
+.admin-login-card { width: 100%; max-width: 420px; padding: 32px; border: 1px solid #e5dbd0; border-radius: 24px; background: #fffdf9; box-shadow: 0 20px 70px #4935230c; }
+.admin-login-card header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.admin-login-card header img { border-radius: 14px; }
+.admin-login-card h1 { font-size: 25px; color: #85233e; }
+.admin-login-card header p { color: #796b60; font-size: 12px; margin-top: 3px; }
+.admin-back-link { display: block; margin-top: 24px; text-align: center; color: #85233e; font-size: 12px; }
+@media (max-width: 640px) { .admin-ui :is(input:not([type=checkbox]), select, textarea) { font-size: 16px; } .admin-login-card { padding: 26px 22px; } }
+@media (prefers-reduced-motion: reduce) { .admin-ui *, .admin-ui *::before, .admin-ui *::after { animation: none !important; transition: none !important; } }

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { OrderShell } from '@/components/order/OrderShell';
 import { OrderMessage } from '@/components/order/OrderMessage';
 import { OrderStatusView } from '@/components/order/OrderStatusView';
+import { RecentOrder } from '@/components/order/RecentOrder';
 import { getOrderForTable } from '@/lib/data/orders';
 import { getTableRunningTotal } from '@/lib/data/tableRunningTotal';
 import { getFeedbackForOrder } from '@/lib/data/feedback';
@@ -15,12 +16,20 @@ export default async function OrderStatusPage({
   const { table, order: orderId } = await searchParams;
   const tableNumber = Number(table);
 
-  if (!table || !Number.isInteger(tableNumber) || tableNumber <= 0 || !orderId) {
+  if (!table || !Number.isInteger(tableNumber) || tableNumber <= 0) {
     return (
       <OrderMessage
         title="Scan the QR code at your table"
         body="This link is missing your order details. Please scan the QR code on your table to start ordering."
       />
+    );
+  }
+
+  if (!orderId) {
+    return (
+      <OrderShell tableNumber={tableNumber} title="Your orders" showCartBar={false}>
+        <RecentOrder tableNumber={tableNumber} />
+      </OrderShell>
     );
   }
 
